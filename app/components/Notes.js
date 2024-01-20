@@ -10,7 +10,7 @@ import colors from '../config/colors';
 import FuncButton from './FuncButton';
 import NoteCard from './NoteCard';
 import CustomModal from './CustomModal';
-import { useNotes } from '../contexts/NoteProvider';
+import { useNotes } from '../contexts/NoteProvider'; 
 import SearchNoteFound from './SearchNoteFound';
 
 function Notes() {
@@ -43,7 +43,7 @@ function Notes() {
     if(!text.trim()) {
       setSearchQuery("")
       setSearchNotFound(false)
-      return await loadNotes()
+      return await loadNotes() 
     }
     setSearchQuery(text)
     const filteredNotes = notes.filter(note => note.title.toLowerCase().includes(text.toLowerCase()) || note.note.toLowerCase().includes(text.toLowerCase()))

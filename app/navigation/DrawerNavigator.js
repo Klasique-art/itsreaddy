@@ -2,18 +2,21 @@ import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { Ionicons } from '@expo/vector-icons'
 
-import ContactsScreen from '../screens/ContactsScreen'
-import HistoryScreen from '../screens/HistoryScreen'
-import MessagesScreen from '../screens/MessagesScreen'
 import AppNavigator from './AppNavigator'
 import colors from '../config/colors'
 import CustomDrawer from '../components/CustomDrawer'
 import NoteProvider from '../contexts/NoteProvider'
+import ContactProvider from '../contexts/ContactProvider'
+import StatProvider from '../contexts/StatsProvider'
+import ChangePasswordScreen from '../screens/ChangePasswordScreen'
+import routes from './routes'
 
 const Drawer = createDrawerNavigator()
 
 const DrawerNavigator = () => {
   return (
+    <StatProvider>
+    <ContactProvider>
     <NoteProvider>
         <Drawer.Navigator
             screenOptions={{
@@ -54,10 +57,9 @@ const DrawerNavigator = () => {
                 }}
             />
             <Drawer.Screen 
-                name="Change Password" 
-                component={ContactsScreen} 
+                name={routes.CHANGE_PASSWORD} 
+                component={ChangePasswordScreen} 
                 options={{
-                    headerShown: false,
                     drawerIcon: ({ focused, size, color }) => {
                         let iconName;
                         if (focused) {
@@ -69,24 +71,10 @@ const DrawerNavigator = () => {
                     }
                 }}
             />
-            <Drawer.Screen 
-                name="Logout" 
-                component={HistoryScreen} 
-                options={{
-                    headerShown: false,
-                    drawerIcon: ({ focused, size, color }) => {
-                        let iconName;
-                        if (focused) {
-                            iconName = "log-out"
-                        } else {
-                            iconName = "log-out-outline"
-                        }
-                        return <Ionicons name={iconName} size={size} color={color} />
-                    }
-                }}
-            />
         </Drawer.Navigator>
     </NoteProvider>
+    </ContactProvider>
+    </StatProvider>
   )
 }
 

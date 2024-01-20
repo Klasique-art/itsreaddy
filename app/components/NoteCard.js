@@ -3,11 +3,10 @@ import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 
 import AppText from './AppText';
 import colors from '../config/colors';
-import formatTime from '../libraries/formatTime';
 
 function NoteCard({item, onPress}) {
 
-    const {title, note, time} = item
+    const {title, note,} = item
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <View style={styles.head}>

@@ -3,43 +3,38 @@ import { View, StyleSheet, Modal, TouchableWithoutFeedback, Keyboard } from 'rea
 
 import AppInput from './AppInput';
 import colors from '../config/colors';
-import FuncButton from './FuncButton'; 
+import FuncButton from './FuncButton';
 
-function CustomModal({visible, onClose, onSubmit, noteDesc, isEdit}) {
-    const [title, setTitle] = useState("")
-    const [note, setNote] = useState("") 
+function TemplateModal({visible, onClose, onSubmit, isEdit, templateToEdit}) {
+    const [template, setTemplate] = useState("")
 
+    const handleSubmit = () => {
+        if(!template.trim()) return onClose()
+
+        if(isEdit){
+            onSubmit(template)
+            setTemplate("")
+        } else {
+            onSubmit(template)
+            setTemplate("")
+        }
+        onClose()
+    }
     const handleCloseModal = () => {
         Keyboard.dismiss()
     }
-    const handleOnChangeText = (text, valueFor) => {
-        if (valueFor === "title") setTitle(text)
-        if (valueFor === "note") setNote(text)
-    }
-    const handleSubmit = () => {
-        if(!title.trim() && !note.trim()) return onClose()
-        onSubmit(title, note)
-        if (!isEdit) {
-            setNote("")
-            setTitle("")
-            
-        }
-        onClose()
-    }
     const closeModal = () => {
-        if (!isEdit) {
-            setNote("")
-            setTitle("")
+        if(!isEdit){
+            setTemplate("")
         }
         onClose()
     }
+
     useEffect(() => {
-        if (isEdit) {
-            setTitle(noteDesc.title)
-            setNote(noteDesc.note)
+        if(isEdit) {
+            setTemplate(templateToEdit.template)
         }
     }, [isEdit])
-    
   return (
     <Modal 
         visible={visible}
@@ -47,26 +42,21 @@ function CustomModal({visible, onClose, onSubmit, noteDesc, isEdit}) {
     >
         <View style={styles.container}>
             <AppInput
-                placeholder="Title"
-                onChangeText={(text) => handleOnChangeText(text, "title")}
-                value={title}
-                style={{
-                    borderRadius: 10,
-                }}
-            />
-            <AppInput
-                placeholder="Note"
+                placeholder="template message"
+                placeholderTextColor={colors.parsley}
+                onChangeText={text => setTemplate(text)}
+                value={template}
                 multiline
                 style={{
-                    padding: 20,
-                    height: 150,
                     borderRadius: 10,
+                    height: 150,
+                    backgroundColor: colors.decor,
+                    color: colors.parsley,
+                    fontWeight: "400",
                 }}
-                onChangeText={(text) => handleOnChangeText(text, "note")}
-                value={note}
             />
             <View style={styles.buttonWrapper}>
-                {title.trim() || note.trim() ? <FuncButton
+                {template.trim() ? <FuncButton
                     name="Cancel"
                     size={30}
                     color={colors.wildWillow}
@@ -116,4 +106,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CustomModal;
+
+export default TemplateModal;

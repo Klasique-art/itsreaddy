@@ -48,7 +48,7 @@ function NoteDetails(props) {
             console.log(error)
         }
     }
-    const openEditModal = () => {
+    const openEditModal = () => { 
         setIsEdit(true)
         setShowModal(true)
     }

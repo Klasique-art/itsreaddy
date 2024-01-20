@@ -4,14 +4,14 @@ import AppText from './AppText';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../config/colors';
 
-function FuncButton({name="button", onPress, style, color, icon, iconColor, size}) {
+function FuncButton({name="button", onPress, style, color=colors.primary, icon, iconColor=colors.decorLite, size=24}) {
   return (
     <TouchableOpacity 
         onPress={onPress}
         style={[styles.container, style, {backgroundColor: color}]}
     >
         <AppText style={{textTransform: "uppercase", fontSize: 16, color: iconColor}}>{name}</AppText>
-        <MaterialCommunityIcons name={icon} size={size} color={iconColor} />
+        {icon && <MaterialCommunityIcons name={icon} size={size} color={iconColor} />}
     </TouchableOpacity>
   );
 }
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingVertical: 5,
     paddingHorizontal: 10,
-    width: 130,
+    width: 160,
     borderRadius: 30,
   }
 });

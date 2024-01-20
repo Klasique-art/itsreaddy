@@ -15,9 +15,8 @@ import AuthNavigator from './app/navigation/AuthNavigator';
 export default function App() {
 
   return (
-  
     <NavigationContainer>
-        <DrawerNavigator />
+      <DrawerNavigator />
     </NavigationContainer>
   );
 }

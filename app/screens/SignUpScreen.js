@@ -7,9 +7,10 @@ import {AppForm, AppFormField, SubmitButton} from '../components/form';
 import colors from '../config/colors';
 import AppText from '../components/AppText';
 import routes from '../navigation/routes';
+import DropdownElement from '../components/DropdownElement';
 
 const validationSchema = Yup.object().shape({
-    userName: Yup.string().required("Enter your name").label("Username").min(3, "Name too short").max(40, "Name too long"),
+    businessName: Yup.string().required("Enter your business name").label("Business name").min(3, "Name too short").max(40, "Name too long"),
     email: Yup.string().required("Please enter your email address").email().label("Email"),
     password: Yup.string().required("You need to create a password").min(8).label("Password").matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/, "Must contain at least one uppercase, one lowercase, and one number"),
     confirmPassword: Yup.string().required("Confirm your password").label("Confirm Password").oneOf([Yup.ref('password')], 'Passwords must match')
@@ -28,18 +29,19 @@ function SignUpScreen({navigation}) {
                     <AppText style={{color: colors.parsley, marginTop: 10, textAlign: "center"}}>Create an account</AppText>
                 </View>
                 <View style={styles.inputContainer} >
+                  <View style={styles.formBox}>
                     <AppForm
-                        initialValues={{userName: "", email: "", password: "", confirmPassword: ""}}
+                        initialValues={{businessName: "", email: "", password: "", confirmPassword: ""}}
                         onSubmit={values => console.log(values)}
                         validationSchema={validationSchema}
                     >
                         <AppFormField
-                            placeholder="Username"
+                            placeholder="Business name"
                             autoCapitalize="none"
                             autoCorrect={false}
                             style={styles.input}
                             placeholderTextColor={colors.parsley}
-                            name="userName"
+                            name="businessName"
                         />
                         <AppFormField
                             placeholder="Email"
@@ -75,17 +77,19 @@ function SignUpScreen({navigation}) {
                             onPress={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
                             secureTextEntry={confirmPasswordVisible}
                         />
+                        <DropdownElement />
                         <SubmitButton 
                             name="Sign Up"
                             color={colors.decorLite}
-                            style={{marginTop: 40}}
+                            style={{marginTop: 30}}
                         />
                     </AppForm>
-                    <View style={styles.infoWrapper}>
-                        <TouchableOpacity onPress={() => navigation.navigate(routes.LOGIN)}>
-                            <AppText style={{color: colors.parsley, marginTop: 10, fontWeight: "bold"}}>Login</AppText>
-                        </TouchableOpacity>
-                    </View>
+                  </View>
+                  <View style={styles.infoWrapper}>
+                      <TouchableOpacity onPress={() => navigation.navigate(routes.LOGIN)}>
+                          <AppText style={{color: colors.parsley, marginTop: 10, fontWeight: "bold"}}>Login</AppText>
+                      </TouchableOpacity>
+                  </View>
                 </View>
             </View>
         </TouchableWithoutFeedback>
@@ -98,6 +102,9 @@ const styles = StyleSheet.create({
         padding: 10,
         height: "100%",
       },
+      formBox: {
+        // backgroundColor: "red",
+      },
       infoWrapper: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -108,7 +115,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.decor,
         color: colors.parsley,
         borderRadius: 10,
-        marginVertical: 20,
       },
       inputContainer: {
         height: "75%",

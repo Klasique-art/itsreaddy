@@ -1,18 +1,18 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const NoteContext = createContext()
+const ContactContext = createContext()
 
-const NoteProvider = ({children}) => {
-    const [notes, setNotes] = useState([])
+const ContactProvider = ({children}) => {
+    const [contacts, setContacts] = useState([]) 
 
-    const loadNotes = async () => {
+    const loadContacts = async () => {
         try {
-          const result = await AsyncStorage.getItem("notes")
+          const result = await AsyncStorage.getItem("contacts")
           if (result !== null) {
-            const parsedNotes = JSON.parse(result);
-            const reversedNotes = reverseData(parsedNotes);
-            setNotes(reversedNotes);
+            const parsedContacts = JSON.parse(result);
+            const reversedContacts = reverseData(parsedContacts);
+            setContacts(reversedContacts);
           }
         } catch (error) {
           console.log(error)
@@ -31,19 +31,19 @@ const NoteProvider = ({children}) => {
       };    
 
       useEffect(() => {
-        loadNotes()
+        loadContacts()
       }, []) 
   return (
-    <NoteContext.Provider value={{
-        notes,
-        setNotes,
-        loadNotes
+    <ContactContext.Provider value={{
+        contacts,
+        setContacts,
+        loadContacts
     }}>
         {children}
-    </NoteContext.Provider>
+    </ContactContext.Provider>
   )
 }
 
-export const useNotes = () => useContext(NoteContext)
+export const useContacts = () => useContext(ContactContext)
 
-export default NoteProvider
+export default ContactProvider

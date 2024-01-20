@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Screen from '../components/Screen';
 import colors from '../config/colors';
 import StatCard from '../components/StatCard';
 import HeadingLabel from '../components/HeadingLabel';
 import AppText from '../components/AppText';
+import { useStats } from '../contexts/StatsProvider';
 
 function HomeScreen(props) {
+  const {contactsNumber} = useStats()
   
   return (
     <Screen style={styles.screen}>
@@ -33,7 +36,7 @@ function HomeScreen(props) {
           <View >
             <StatCard 
                 title="Total Contacts" 
-                value="1,000,000" 
+                value={contactsNumber} 
                 icon="contacts"
                 color={colors.primary}
                 iconColor={colors.decorLite}

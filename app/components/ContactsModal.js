@@ -4,39 +4,49 @@ import { View, StyleSheet, Modal, TouchableWithoutFeedback, Keyboard } from 'rea
 import AppInput from './AppInput';
 import colors from '../config/colors';
 import FuncButton from './FuncButton'; 
+import Screen from './Screen';
 
-function CustomModal({visible, onClose, onSubmit, noteDesc, isEdit}) {
+function ContactsModal({visible, onClose, onSubmit, noteDesc, isEdit}) {
     const [title, setTitle] = useState("")
-    const [note, setNote] = useState("") 
+    const [number, setNumber] = useState("") 
+    const [desc, setDesc] = useState("")
+    const [email, setEmail] = useState("")
 
     const handleCloseModal = () => {
         Keyboard.dismiss()
     }
     const handleOnChangeText = (text, valueFor) => {
         if (valueFor === "title") setTitle(text)
-        if (valueFor === "note") setNote(text)
+        if (valueFor === "number") setNumber(text)
+        if (valueFor === "desc") setDesc(text)
+        if (valueFor === "email") setEmail(text)
     }
     const handleSubmit = () => {
-        if(!title.trim() && !note.trim()) return onClose()
-        onSubmit(title, note)
+        if(!title.trim() && !number.trim() && !desc.trim() && !email.trim()) return onClose()
+        onSubmit(title, number, desc, email)
         if (!isEdit) {
-            setNote("")
+            setNumber("")
             setTitle("")
-            
+            setDesc("")
+            setEmail("")
         }
         onClose()
     }
     const closeModal = () => {
         if (!isEdit) {
-            setNote("")
+            setNumber("")
             setTitle("")
+            setDesc("")
+            setEmail("")
         }
         onClose()
     }
     useEffect(() => {
         if (isEdit) {
             setTitle(noteDesc.title)
-            setNote(noteDesc.note)
+            setNumber(noteDesc.number)
+            setDesc(noteDesc.desc)
+            setEmail(noteDesc.email)
         }
     }, [isEdit])
     
@@ -47,26 +57,49 @@ function CustomModal({visible, onClose, onSubmit, noteDesc, isEdit}) {
     >
         <View style={styles.container}>
             <AppInput
-                placeholder="Title"
+                placeholder="Name"
                 onChangeText={(text) => handleOnChangeText(text, "title")}
                 value={title}
                 style={{
                     borderRadius: 10,
                 }}
+                height={65}
             />
             <AppInput
-                placeholder="Note"
+                placeholder="Number"
+                style={{
+                    padding: 10,
+                    borderRadius: 10,
+                }}
+                onChangeText={(text) => handleOnChangeText(text, "number")}
+                value={number}
+                keyboardType="number-pad"
+                height={65}
+            />
+            <AppInput
+                placeholder="Email"
+                style={{
+                    padding: 10,
+                    borderRadius: 10,
+                }}
+                onChangeText={(text) => handleOnChangeText(text, "email")}
+                value={email}
+                keyboardType="email-address"
+                height={65}
+            />
+            <AppInput
+                placeholder="Description"
                 multiline
                 style={{
                     padding: 20,
                     height: 150,
                     borderRadius: 10,
                 }}
-                onChangeText={(text) => handleOnChangeText(text, "note")}
-                value={note}
+                onChangeText={(text) => handleOnChangeText(text, "desc")}
+                value={desc}
             />
             <View style={styles.buttonWrapper}>
-                {title.trim() || note.trim() ? <FuncButton
+                {title.trim() || number.trim() || email.trim() || desc.trim() ? <FuncButton
                     name="Cancel"
                     size={30}
                     color={colors.wildWillow}
@@ -116,4 +149,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CustomModal;
+export default ContactsModal;

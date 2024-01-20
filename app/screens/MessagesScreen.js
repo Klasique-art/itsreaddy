@@ -16,8 +16,8 @@ function MessagesScreen(props) {
   const [index, setIndex] = useState(0)
 
   const [routes] = useState([
-    { key: 'sms', title: 'SMS' },
-    { key: 'voicemail', title: 'Voicemail' },
+    { key: 'sms', title: 'Compose SMS' },
+    { key: 'voicemail', title: 'Compose Voicemail' },
   ])
 
   return (

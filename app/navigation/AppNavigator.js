@@ -8,6 +8,7 @@ import HomeScreen from '../screens/HomeScreen'
 import MessagesScreen from '../screens/MessagesScreen'
 import colors from '../config/colors'
 import NoteNavigator from './NoteNavigator'
+import MessagesNavigator from './MessagesNavigator'
 
 const Tab = createBottomTabNavigator()
 
@@ -72,7 +73,7 @@ const AppNavigator = () => {
         />
         <Tab.Screen 
             name="Messages" 
-            component={MessagesScreen} 
+            component={MessagesNavigator} 
             options={{
                 headerShown: false,
             }}

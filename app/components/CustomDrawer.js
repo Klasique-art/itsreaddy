@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, ImageBackground, Image } from 'react-native';
+import { View, StyleSheet, ImageBackground, Image, Alert } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import colors from '../config/colors';
+import FuncButton from './FuncButton';
 
 
 function CustomDrawer(props) {
@@ -19,6 +20,31 @@ function CustomDrawer(props) {
         <View>
             <DrawerItemList {...props} />
         </View>
+        <FuncButton
+            name="Logout"
+            onPress={() => 
+                Alert.alert(
+                    "Logout",
+                    "Are you sure you want to logout?",
+                    [
+                        {
+                            text: "Cancel",
+                            style: "cancel"
+                        },
+                        { text: "OK" }
+                    ],
+                    { cancelable: true }
+                )
+            }
+            color={colors.parsley}
+            icon="logout"
+            style={{
+                marginHorizontal: 15,
+                borderRadius: 30,
+                marginTop: 100,
+                // width: 'auto',
+            }}
+        />
     </DrawerContentScrollView>
 
   );
